@@ -1,5 +1,8 @@
-const User = require('./user.model');
-const Post = require('../posts/posts.model');
+const db = require('../db/db');
+
+// Create main model
+const User = db.user;
+const Post = db.post;
 
 module.exports.createUser = userInfo => {
 	return User.create(userInfo);
@@ -14,5 +17,7 @@ module.exports.findUserById = id => {
 };
 
 module.exports.findUsers = () => {
-	return User.findAll({});
+	return User.findAll({
+		include: [Post]
+	});
 };

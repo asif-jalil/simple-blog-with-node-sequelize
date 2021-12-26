@@ -1,7 +1,10 @@
 const postService = require('./posts.service');
 
 module.exports.createPosts = async function (req, res) {
-	const post = req.body;
+	const post = {
+		...req.body,
+		userId: req.params.id
+	};
 	const createdPost = await postService.createPost(post);
 	return res.status(200).json(createdPost);
 };
@@ -20,8 +23,8 @@ module.exports.getPostById = async function (req, res) {
 module.exports.updatePostById = async function (req, res) {
 	const postId = req.params.id;
 	const update = req.body;
-	const post = await postService.updatePostById(postId, update);
-	return res.status(200).json(post);
+	await postService.updatePostById(postId, update);
+	return res.status(200).json({ message: 'Your post has been updated successfully' });
 };
 module.exports.deletePostById = async function (req, res) {
 	const postId = req.params.id;

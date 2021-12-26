@@ -1,25 +1,35 @@
-// const mongoose = require('mongoose');
-const db = require('../db/db');
-const User = require('../user/user.model');
+module.exports = (sequelize, datatype) => {
+	const Post = sequelize.define('post', {
+		title: {
+			type: datatype.STRING,
+			allowNull: false
+		},
+		body: {
+			type: datatype.TEXT,
+			allowNull: false
+		},
+		category: {
+			type: datatype.STRING
+		},
+		userId: {
+			type: datatype.INTEGER,
+			references: {
+				model: 'users',
+				key: 'id'
+			}
+		},
+		author: {
+			type: datatype.STRING,
+			allowNull: false
+		}
+	});
 
-const postSchema = {
-	title: {
-		type: db.DataTypes.STRING,
-		allowNull: false
-	},
-	body: {
-		type: db.DataTypes.TEXT,
-		allowNull: false
-	},
-	category: {
-		type: db.DataTypes.STRING
-	},
-	author: {
-		type: db.DataTypes.STRING,
-		allowNull: false
-	}
+	Post.associate = models => {
+		Post.belongsTo(models.user, {
+			foreignKey: 'userId'
+			// as: 'user'
+		});
+	};
+
+	return Post;
 };
-
-const Post = db.sequelize.define('post', postSchema);
-
-module.exports = Post;

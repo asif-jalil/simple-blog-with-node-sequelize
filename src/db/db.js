@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const dbConfig = require('../config/dbConfig');
+const models = {};
 
 const dbURL = dbConfig.db;
 if (!dbURL) {
@@ -27,14 +28,24 @@ const sequelize = new Sequelize(dbConfig.db, dbConfig.user, dbConfig.password, {
 	}
 })();
 
-const db = {};
+// models.Sequelize = Sequelize;
+// models.sequelize = sequelize;
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-db.DataTypes = DataTypes;
+models.user = require('../user/user.model')(sequelize, DataTypes);
+models.post = require('../posts/posts.model')(sequelize, DataTypes);
 
-db.sequelize.sync({ force: false }).then(() => {
-	console.log('Re sync done!');
+Object.keys(models).forEach(key => {
+	if (models[key].associate) {
+		console.log(models[key]);
+		models[key].associate(models);
+	}
 });
 
-module.exports = db;
+sequelize
+	.sync({ force: false })
+	.then(() => {
+		console.log('Re sync done!');
+	})
+	.catch(err => console.trace(err));
+
+module.exports = models;

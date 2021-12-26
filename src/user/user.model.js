@@ -1,31 +1,35 @@
-const db = require('../db/db');
-const Post = require('../posts/posts.model');
-
-const userSchema = {
-	name: {
-		type: db.DataTypes.STRING,
-		allowNull: false,
-		validate: {
-			notEmpty: true
-		}
-	},
-	email: {
-		type: db.DataTypes.STRING,
-		allowNull: false,
-		validate: {
-			isEmail: true
+module.exports = (sequelize, datatype) => {
+	const User = sequelize.define('user', {
+		name: {
+			type: datatype.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true
+			}
 		},
-		unique: true
-	},
-	password: {
-		type: db.DataTypes.STRING,
-		allowNull: false,
-		validate: {
-			notEmpty: true
+		email: {
+			type: datatype.STRING,
+			allowNull: false,
+			validate: {
+				isEmail: true
+			},
+			unique: true
+		},
+		password: {
+			type: datatype.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true
+			}
 		}
-	}
+	});
+
+	User.associate = models => {
+		User.hasMany(models.post, {
+			foreignKey: 'userId'
+			// as: 'amar'
+		});
+	};
+
+	return User;
 };
-
-const User = db.sequelize.define('user', userSchema);
-
-module.exports = User;

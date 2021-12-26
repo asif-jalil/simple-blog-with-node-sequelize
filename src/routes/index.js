@@ -7,7 +7,7 @@ const postController = require('../posts/posts.controller');
 router.get('/', function (req, res) {
 	return res.json({ message: 'App is running' });
 });
-router.post('/posts', postController.createPosts);
+router.post('/posts/:id', postController.createPosts);
 router.get('/posts', postController.getPosts);
 router.get('/posts/:id', postController.getPostById);
 router.put('/posts/:id', postController.updatePostById);
