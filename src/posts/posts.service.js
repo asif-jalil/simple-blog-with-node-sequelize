@@ -1,8 +1,7 @@
 const db = require('../db/db');
 
 // create main model
-const Post = db.post;
-const User = db.user;
+const Post = db.posts;
 
 module.exports.createPost = async function (post) {
 	return await Post.create(post);

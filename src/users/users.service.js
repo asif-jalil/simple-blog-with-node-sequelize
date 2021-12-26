@@ -1,8 +1,8 @@
 const db = require('../db/db');
 
 // Create main model
-const User = db.user;
-const Post = db.post;
+const User = db.users;
+const Post = db.posts;
 
 module.exports.createUser = userInfo => {
 	return User.create(userInfo);
