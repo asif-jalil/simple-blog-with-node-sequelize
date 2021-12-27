@@ -11,7 +11,7 @@ router.post('/posts/:userId', isAuthenticated, postController.createPosts);
 router.get('/posts', postController.getPosts);
 router.get('/posts/single/:id', postController.getPostById);
 router.get('/posts/pagination', postController.getPostByPagination);
-router.put('/posts/:id', postController.updatePostById);
-router.delete('/posts/:id', postController.deletePostById);
+router.put('/posts/:id', isAuthenticated, postController.updatePostById);
+router.delete('/posts/:id', isAuthenticated, postController.deletePostById);
 
 module.exports = router;
