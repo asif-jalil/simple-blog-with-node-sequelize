@@ -116,7 +116,7 @@ The REST API to the example app is described below.
 ```
 ## Get Post By Pagination
 #### Request
-`GET /posts/pagination?page=1&posts=3` or `GET /posts/pagination`__
+`GET /posts/pagination?page=1&posts=3` or `GET /posts/pagination` <br />
 Here `page=1` & `posts=3` is default value. If you don't pass any query, default value will be applied
 #### Response
 ```
