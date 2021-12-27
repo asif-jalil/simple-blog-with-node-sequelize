@@ -18,6 +18,7 @@ module.exports.findUserById = id => {
 
 module.exports.findUsers = () => {
 	return User.findAll({
+		attributes: ['id', 'name'],
 		include: [Post]
 	});
 };
