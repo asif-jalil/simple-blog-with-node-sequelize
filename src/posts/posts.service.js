@@ -1,14 +1,17 @@
 const db = require('../db/db');
 
 // create main model
-const Post = db.posts;
+const Post = db.post;
+const User = db.user;
 
 module.exports.createPost = async function (post) {
 	return await Post.create(post);
 };
 
 module.exports.getPosts = async function () {
-	return await Post.findAll({});
+	return await Post.findAll({
+		include: [User]
+	});
 };
 
 module.exports.getPostById = async function (postId) {
