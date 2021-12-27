@@ -25,3 +25,7 @@ module.exports.updatePostById = async function (postId, update) {
 module.exports.deletePostById = async function (postId) {
 	return await Post.destroy({ where: { id: postId } });
 };
+
+module.exports.getPostByPagination = async function (offset, limit) {
+	return await Post.findAll({ offset: offset, limit: limit })
+}

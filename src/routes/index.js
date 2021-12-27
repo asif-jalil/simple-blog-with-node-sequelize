@@ -9,7 +9,8 @@ router.get('/', function (req, res) {
 });
 router.post('/posts/:id', isAuthenticated, postController.createPosts);
 router.get('/posts', postController.getPosts);
-router.get('/posts/:id', postController.getPostById);
+router.get('/posts/single/:id', postController.getPostById);
+router.get('/posts/pagination', postController.getPostByPagination);
 router.put('/posts/:id', postController.updatePostById);
 router.delete('/posts/:id', postController.deletePostById);
 

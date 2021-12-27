@@ -12,10 +12,6 @@ module.exports = (sequelize, datatype) => {
 			},
 			category: {
 				type: datatype.STRING
-			},
-			author: {
-				type: datatype.STRING,
-				allowNull: false
 			}
 		},
 		{
