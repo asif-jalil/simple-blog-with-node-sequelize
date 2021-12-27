@@ -16,8 +16,9 @@ module.exports.findUserById = id => {
 	return User.findOne({ where: { id: id } });
 };
 
-module.exports.findUsers = () => {
-	return User.findAll({
+module.exports.findUserById = (id) => {
+	return User.findOne({
+		where: {id: id},
 		attributes: ['id', 'name'],
 		include: [Post]
 	});

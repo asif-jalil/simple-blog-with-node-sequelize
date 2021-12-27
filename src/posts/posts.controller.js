@@ -3,7 +3,7 @@ const postService = require("./posts.service");
 module.exports.createPosts = async function (req, res) {
   const post = {
     ...req.body,
-    userId: req.params.id,
+    userId: req.params.userId,
   };
 
   try {

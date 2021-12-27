@@ -122,7 +122,8 @@ module.exports.login = async (req, res) => {
 	}
 };
 
-module.exports.findUsers = async (req, res) => {
-	const users = await userService.findUsers();
-	res.status(200).json(users);
+module.exports.findUserById = async (req, res) => {
+	const id = req.params.id;
+	const user = await userService.findUserById(id);
+	res.status(200).json(user);
 };
