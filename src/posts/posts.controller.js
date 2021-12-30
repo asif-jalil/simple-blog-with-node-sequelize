@@ -1,10 +1,17 @@
 const postService = require('./posts.service');
 const multer = require('multer');
 const path = require('path');
+const {
+	mkdirSync,
+	constants,
+	promises: { access }
+} = require('fs');
 
 module.exports.createPosts = async function (req, res) {
+	const imgName = req.file.destination + req.file.filename;
 	const post = {
 		...req.body,
+		image: imgName,
 		userId: req.params.userId
 	};
 
@@ -58,11 +65,6 @@ module.exports.deletePostById = async function (req, res) {
 	}
 };
 
-const {
-	constants,
-	promises: { access }
-} = require('fs');
-
 module.exports.getPostByPagination = async function (req, res) {
 	const pageNumber = req.query.page || 1;
 	const perPage = req.query.posts || 3;
@@ -80,11 +82,13 @@ module.exports.getPostByPagination = async function (req, res) {
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, 'images');
+		const dir = req.originalUrl.split('/')[1];
+		const filePath = `src/assets/img/${dir}`;
+		mkdirSync(filePath, { recursive: true });
+		cb(null, filePath);
 	},
 	filename: function (req, file, cb) {
-		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-		cb(null, file.fieldname + '-' + uniqueSuffix);
+		cb(null, Date.now() + path.extname(file.originalname));
 	}
 });
 
@@ -99,7 +103,7 @@ module.exports.upload = multer({
 		const extname = fileTypes.test(path.extname(file.originalname));
 
 		if (mimeType && extname) {
-			cb(null, true);
+			return cb(null, true);
 		}
 
 		cb(new Error('Give proper file format to upload'));

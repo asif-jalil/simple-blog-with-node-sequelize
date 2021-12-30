@@ -7,7 +7,7 @@ const { logRequest } = require('../posts/posts.middleware');
 router.get('/', function (req, res) {
 	return res.json({ message: 'App is running' });
 });
-router.post('/posts/:userId', isAuthenticated, postController.createPosts);
+router.post('/posts/:userId', isAuthenticated, postController.upload, postController.createPosts);
 router.get('/posts', postController.getPosts);
 router.get('/posts/single/:id', postController.getPostById);
 router.get('/posts/pagination', postController.getPostByPagination);
